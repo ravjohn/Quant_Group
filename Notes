@@ -1,18 +1,30 @@
 Notes
 
 Sample question: How is health impacted by food access? 
-Health outcome = healthy food sources + access to food + SNAP households + poverty rate + age + education + median income
 
-Health Outcome: Diabetes
+How do 
+
+
+Continuous: SNAP households, households, percentage of households using SNAP, poverty rate, median income, healthy food sources
+Categorical: age, education, access to food
+
+Health Outcome: Mental Health and Physical Health
+
+County Level, All Counties, Include Census Tracts Too
 
 Input Variables: 
 * CDC
     * MRFEI CDC # About Healthy Food Sources - by census tract
+    * Mental Health and Physical Health https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh
+    
 * Food Access Research Database (USDA)
     * Access to food options within 1 mile urban or 10 miles rural
-    * SNAP recipients by housing units (and housing unit totals)
+    * SNAP recipients by housing units
+    * Total units of housing
     * Poverty rate
+
 * Census Data
     * Age
     * Education
     * Median Income
+    
