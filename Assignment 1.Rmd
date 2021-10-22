@@ -6,20 +6,3 @@ output: html_document
 ---
 
 #Test of Github Collaboration!
-
-Sample question: How is health impacted by food access? 
-Health outcome = healthy food sources + access to food + SNAP households + poverty rate + age + education + median income
-
-Health Outcome:
-
-Input Variables: 
-* CDC
-    * MRFEI CDC # About Healthy Food Sources - by census tract
-* Food Access Research Database (USDA)
-    * Access to food options within 1 mile urban or 10 miles rural
-    * SNAP recipients by housing units (and housing unit totals)
-    * Poverty rate
-* Census Data
-    * Age
-    * Education
-    * Median Income
