@@ -9,6 +9,7 @@ output: html_document
 How do food access and demographic characteristics impact mental and physical health on a county scale?
 
 # Prior Research - AlL
+Seligman and Schillinger (2010) posit that food insecurity and chronic disease follows a cyclical pattern where food insecurity leads to chronic disease, thereby increasing medical costs and causing low income households to make trade-offs in spending, often leading to less money available to address food insecurity.
 
 # Data
 
@@ -25,7 +26,7 @@ library(knitr)
 * SNAP recipients by housing units
 * Percent of households using SNAP
 * Poverty rate
-```{r}
+```{r, message = FALSE, results = FALSE, warning = FALSE}
 USDA <- read_csv("Food Access Research Atlas.csv") %>%
   mutate(CensusTract = case_when(str_length(as.character(CensusTract)) == 11 ~ as.character(CensusTract),
                            str_length(as.character(CensusTract)) == 10 ~ paste("0", CensusTract, sep=""),
@@ -61,3 +62,4 @@ USDA <- read_csv("Food Access Research Atlas.csv") %>%
 ```
 
 # References
+Seligman, Hilary K., and Dean Schillinger. "Hunger and Socioeconomic Disparities in Chronic Disease." The New England Journal of Medicine 363, no. 1 (2010): 6-9.

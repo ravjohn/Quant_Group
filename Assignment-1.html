@@ -193,10 +193,16 @@ library(knitr)</code></pre>
 <ul>
 <li>Access to food options within 1 mile urban or 10 miles rural</li>
 <li>SNAP recipients by housing units</li>
-<li>Total units of housing</li>
 <li>Percent of households using SNAP</li>
 <li>Poverty rate</li>
 </ul>
+<pre class="r"><code>USDA &lt;- read_csv(&quot;Food Access Research Atlas.csv&quot;) %&gt;%
+  mutate(CensusTract = case_when(str_length(as.character(CensusTract)) == 11 ~ as.character(CensusTract),
+                           str_length(as.character(CensusTract)) == 10 ~ paste(&quot;0&quot;, CensusTract, sep=&quot;&quot;),
+                           TRUE ~ &quot;not a tract&quot;)) %&gt;%
+  mutate(pct_SNAP = TractSNAP / OHU2010) %&gt;%
+  filter(CensusTract != &quot;not a tract&quot;) %&gt;%
+  select(CensusTract, TractSNAP, OHU2010, pct_SNAP, PovertyRate, LA1and10)</code></pre>
 </div>
 <div id="census-data---2010---raveena" class="section level2">
 <h2>Census Data - 2010 - RAVEENA</h2>
