@@ -13,6 +13,13 @@ How do food access and demographic characteristics impact mental and physical he
 # Data
 
 # Load Data
+```{r, message = FALSE, results = FALSE}
+library(tidyverse)
+library(tidycensus)
+library(readxl)
+library(knitr)
+```
+
 ## USDA - Food Access Research Database - 2019 - JACK
 * Access to food options within 1 mile urban or 10 miles rural
 * SNAP recipients by housing units
