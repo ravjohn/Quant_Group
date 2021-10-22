@@ -44,6 +44,68 @@ USDA <- read_csv("Food Access Research Atlas.csv") %>%
 * Households with children
 * Race
 ```{r}
+
+all_states <- c(state.abb)
+
+censusMedAge <- get_decennial(geography = "tract", 
+                        year = 2010,
+                        variables = c(MedAge = "P013001"),
+                        output = "wide",
+                        state = all_states,
+                        geometry = TRUE)
+  
+censusHouseSize <- get_decennial(geography = "tract", 
+                        year = 2010,
+                        variables = c(HSTotal = "H013001",
+                                      HSOne = "H013002",
+                                      HSTwo = "H013003",
+                                      HSThree = "H013004",
+                                      HSFour = "H013005",
+                                      HSFive = "H013006",
+                                      HSSix = "H013007",
+                                      HSSevenPlus = "H013008"),
+                        output = "wide",
+                        state = all_states,
+                        geometry = TRUE)
+
+censusChildren <- get_decennial(geography = "tract", 
+                        year = 2010,
+                        variables = c(OwnWChildren = "H019003",
+                                      RentWChildren = "H019006"),
+                        output = "wide",
+                        state = all_states,
+                        geometry = TRUE)
+
+censusRace <- get_decennial(geography = "tract", 
+                        year = 2010,
+                        variables = c(RTotal = "P010001",
+                                      RWhite = "P010002",
+                                      RBlack = "P010003",
+                                      RAI = "P010004",
+                                      RAsian = "P010005",
+                                      RNH = "P010006",
+                                      ROther = "P010007",
+                                      RTwoPlus = "P010008"),
+                        output = "wide",
+                        state = all_states,
+                        geometry = TRUE)
+
+acsEducation<- get_acs(geography = "tract", 
+                   variables = c(EdTotal = "B15003_001",
+                                 EdHighSchool = "B15003_017",
+                                 EdGED = "B15003_018",
+                                 EdAssociates = "B15003_021",
+                                 EdBachelors = "B15003_022",
+                                 EdMasters = "B15003_023",
+                                 EdProfessional = "B15003_024",
+                                 EdDoctorate = "B15003_025"), 
+                   state = all_states,
+                   output = "wide")
+
+acsMedIncome<- get_acs(geography = "tract", 
+                   variables = c(MedIncome = "B06011_001"), 
+                   state = all_states,
+                   output = "wide")
 ```
 
 ## CDC - PLACES - 2018 - ALANNA
