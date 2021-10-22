@@ -66,7 +66,7 @@ censusHouseSize <- get_decennial(geography = "tract",
                                       HSSevenPlus = "H013008"),
                         output = "wide",
                         state = all_states,
-                        geometry = TRUE)
+                        geometry = FALSE)
 
 censusChildren <- get_decennial(geography = "tract", 
                         year = 2010,
@@ -74,7 +74,7 @@ censusChildren <- get_decennial(geography = "tract",
                                       RentWChildren = "H019006"),
                         output = "wide",
                         state = all_states,
-                        geometry = TRUE)
+                        geometry = FALSE)
 
 censusRace <- get_decennial(geography = "tract", 
                         year = 2010,
@@ -88,7 +88,7 @@ censusRace <- get_decennial(geography = "tract",
                                       RTwoPlus = "P010008"),
                         output = "wide",
                         state = all_states,
-                        geometry = TRUE)
+                        geometry = FALSE)
 
 acsEducation<- get_acs(geography = "tract", 
                    variables = c(EdTotal = "B15003_001",
@@ -100,12 +100,14 @@ acsEducation<- get_acs(geography = "tract",
                                  EdProfessional = "B15003_024",
                                  EdDoctorate = "B15003_025"), 
                    state = all_states,
-                   output = "wide")
+                   output = "wide",
+                   geometry = FALSE)
 
 acsMedIncome<- get_acs(geography = "tract", 
                    variables = c(MedIncome = "B06011_001"), 
                    state = all_states,
-                   output = "wide")
+                   output = "wide",
+                   geometry = FALSE)
 ```
 
 ## CDC - PLACES - 2018 - ALANNA
@@ -117,6 +119,10 @@ acsMedIncome<- get_acs(geography = "tract",
 ## CDC - MRFEI - 2011 - RAVEENA
 * Healthy Food Sources
 ```{r}
+CDC_MRFEI <- read_excel(path = "2_16_mrfei_data_table.xls", 
+                      sheet = "MRFEI According to Census Tract") %>%
+  rename(GEOID = fips)%>%
+  select(GEOID,mrfei)
 ```
 
 ## Combine Data into One Table
@@ -124,4 +130,7 @@ acsMedIncome<- get_acs(geography = "tract",
 ```
 
 # References
+Centers for Disease Control and Prevention, "Census Tract Level State Maps of the Modified Retail Food Environment Index (mRFEI)" https://www.cdc.gov/obesity/downloads/census-tract-level-state-maps-mrfei_TAG508.pdf
 Seligman, Hilary K., and Dean Schillinger. "Hunger and Socioeconomic Disparities in Chronic Disease." The New England Journal of Medicine 363, no. 1 (2010): 6-9.
+United States Census Bureau. American Community Survey, 5-year estimates. 2019.
+United States Census Bureau. 2010.
