@@ -23,10 +23,16 @@ library(knitr)
 ## USDA - Food Access Research Database - 2019 - JACK
 * Access to food options within 1 mile urban or 10 miles rural
 * SNAP recipients by housing units
-* Total units of housing
 * Percent of households using SNAP
 * Poverty rate
 ```{r}
+USDA <- read_csv("Food Access Research Atlas.csv") %>%
+  mutate(CensusTract = case_when(str_length(as.character(CensusTract)) == 11 ~ as.character(CensusTract),
+                           str_length(as.character(CensusTract)) == 10 ~ paste("0", CensusTract, sep=""),
+                           TRUE ~ "not a tract")) %>%
+  mutate(pct_SNAP = TractSNAP / OHU2010) %>%
+  filter(CensusTract != "not a tract") %>%
+  select(CensusTract, TractSNAP, OHU2010, pct_SNAP, PovertyRate, LA1and10)
 ```
 
 ## Census Data - 2010 - RAVEENA
