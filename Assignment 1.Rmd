@@ -5,6 +5,46 @@ date: "10/21/2021"
 output: html_document
 ---
 
-#Test of Github Collaboration!
+# Research Question
+How do food access and demographic characteristics impact mental and physical health on a county scale?
 
-#testing testing!
+# Prior Research - AlL
+
+# Data
+
+# Load Data
+## USDA - Food Access Research Database - 2019 - JACK
+* Access to food options within 1 mile urban or 10 miles rural
+* SNAP recipients by housing units
+* Total units of housing
+* Percent of households using SNAP
+* Poverty rate
+```{r}
+```
+
+## Census Data - 2010 - RAVEENA
+* Age
+* Education
+* Median Income
+* Household size
+* Households with children
+* Race
+```{r}
+```
+
+## CDC - PLACES - 2018 - ALANNA
+* Mental Health
+* Physical Health
+```{r}
+```
+
+## CDC - MRFEI - 2011 - RAVEENA
+* Healthy Food Sources
+```{r}
+```
+
+## Combine Data into One Table
+```{r}
+```
+
+# References
