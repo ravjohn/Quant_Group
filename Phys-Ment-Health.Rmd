@@ -1,0 +1,47 @@
+---
+title: "Quant Assignment 1"
+author: "Alanna Wittet"
+date: "10/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, load data, messaes=FALSE}
+
+library(tidyverse)
+library(tidycensus)
+library(readxl)
+library(knitr)
+```
+
+## Physical Health
+```{r, messages=FALSE, warning=FALSE}
+
+Physical_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release (1).csv') %>%
+  filter(Year == 2018) %>%
+  filter(Short_Question_Text == "Physical Health") %>%
+  rename(GEOID = CountyFIPS) %>%
+  group_by(GEOID)
+
+```
+
+
+## Mental Health
+```{r, messages=FALSE, warning=FALSE}
+
+Mental_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release (1).csv') %>%
+  filter(Year == 2018) %>%
+  filter(Short_Question_Text == "Mental Health") %>%
+  rename(GEOID = CountyFIPS) %>%
+  group_by(GEOID)
+
+
+
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
