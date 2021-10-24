@@ -44,6 +44,7 @@ USDA <- read_csv("Food Access Research Atlas.csv") %>%
 * Household size
 * Households with children
 * Race
+
 ```{r}
 
 all_states <- c(state.abb)
@@ -53,7 +54,8 @@ censusMedAge <- get_decennial(geography = "tract",
                         variables = c(MedAge = "P013001"),
                         output = "wide",
                         state = all_states,
-                        geometry = TRUE)
+                        geometry = TRUE)%>%
+  select(GEOID,MedAge)
   
 censusHouseSize <- get_decennial(geography = "tract", 
                         year = 2010,
@@ -67,15 +69,27 @@ censusHouseSize <- get_decennial(geography = "tract",
                                       HSSevenPlus = "H013008"),
                         output = "wide",
                         state = all_states,
-                        geometry = FALSE)
-
+                        geometry = FALSE)>%>
+  mutate(pct_HSOne = HSOne / HSTotal) %>%
+  mutate(pct_HSTwo = HSTwo / HSTotal) %>%
+  mutate(pct_HSThree = HSThree / HSTotal) %>%
+  mutate(pct_HSFour = HSFour / HSTotal) %>%
+  mutate(pct_HSFive = HSFive / HSTotal) %>%
+  mutate(pct_HSSix = HSSix / HSTotal) %>%
+  mutate(pct_HSSevenPlus = HSSevenPlus / HSTotal) %>%
+  select(GEOID, pct_HSOne, pct_HSTwo, pct_HSThree, pct_HSFour, pct_HSFive, pct_HSSix, pct_HSSevenPlus)
+  
 censusChildren <- get_decennial(geography = "tract", 
                         year = 2010,
-                        variables = c(OwnWChildren = "H019003",
+                        variables = c(TotalWChildren = "H019001",
+                                      OwnWChildren = "H019003",
                                       RentWChildren = "H019006"),
                         output = "wide",
                         state = all_states,
-                        geometry = FALSE)
+                        geometry = FALSE)%>%
+  mutate(pct_OwnWChildren = OwnWChildren / TotalWChildren) %>%
+  mutate(pct_RentWChildren = RentWChildren / TotalWChildren) %>%
+  select(GEOID, pct_OwnWChildren, pct_RentWChildren)
 
 censusRace <- get_decennial(geography = "tract", 
                         year = 2010,
@@ -89,7 +103,15 @@ censusRace <- get_decennial(geography = "tract",
                                       RTwoPlus = "P010008"),
                         output = "wide",
                         state = all_states,
-                        geometry = FALSE)
+                        geometry = FALSE)%>%
+  mutate(pct_RWhite = RWhite / RTotal) %>%
+  mutate(pct_RBlack = RBlack / RTotal) %>%
+  mutate(pct_RAI = RAI / RTotal) %>%
+  mutate(pct_RAsian = RAsian / RTotal) %>%
+  mutate(pct_RNH = RNH / RTotal) %>%
+  mutate(pct_ROther = ROther / RTotal) %>%
+  mutate(pct_RTwoPlus = RTwoPlus / RTotal) %>%
+  select(GOID, pct_RWhite, pct_RBlack, pct_RAI, pct_RAsian, pct_RNH, pct_ROther, pct_RTwoPlus)
 
 acsEducation<- get_acs(geography = "tract", 
                    variables = c(EdTotal = "B15003_001",
@@ -102,13 +124,23 @@ acsEducation<- get_acs(geography = "tract",
                                  EdDoctorate = "B15003_025"), 
                    state = all_states,
                    output = "wide",
-                   geometry = FALSE)
+                   geometry = FALSE)%>%
+  mutate(pct_EdHighSchool = EdHighschool / EdTotal)%>%
+  mutate(pct_EdGED = EdGED / EdTotal)%>%
+  mutate(pct_EdAssociates = EdAssociates / EdTotal)%>%
+  mutate(pct_EdBachelors = EdBachelors / EdTotal)%>%
+  mutate(pct_EdMasters = EdMasters / EdTotal)%>%
+  mutate(pct_EdProfessional = EdProfessional / EdTotal)%>%
+  mutate(pct_EdDoctorate = EdDoctorate / EdTotal)%>%
+  select(GEID, pct_EdHighSchool, pct_EdGED, pct_EdAssociates, pct_EdBachelors, pct_EdMasters, pct_EdProfessional, pct_EdDoctorate)
+
 
 acsMedIncome<- get_acs(geography = "tract", 
                    variables = c(MedIncome = "B06011_001"), 
                    state = all_states,
                    output = "wide",
-                   geometry = FALSE)
+                   geometry = FALSE)%>%
+  select(GEOID, MedIncomeE)
 ```
 
 ## CDC - PLACES - 2018 - ALANNA
