@@ -114,7 +114,19 @@ acsMedIncome<- get_acs(geography = "tract",
 ## CDC - PLACES - 2018 - ALANNA
 * Mental Health
 * Physical Health
-```{r}
+```{r, messages=FALSE, warning=FALSE}
+
+Physical_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release (1).csv') %>%
+  filter(Year == 2018) %>%
+  filter(Short_Question_Text == "Physical Health") %>%
+  rename(GEOID = CountyFIPS) %>%
+  group_by(GEOID)
+
+Mental_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release (1).csv') %>%
+  filter(Year == 2018) %>%
+  filter(Short_Question_Text == "Mental Health") %>%
+  rename(GEOID = CountyFIPS) %>%
+  group_by(GEOID)
 ```
 
 ## CDC - MRFEI - 2011 - RAVEENA
@@ -128,6 +140,7 @@ CDC_MRFEI <- read_excel(path = "2_16_mrfei_data_table.xls",
 
 ## Combine Data into One Table
 ```{r}
+
 ```
 
 # References
