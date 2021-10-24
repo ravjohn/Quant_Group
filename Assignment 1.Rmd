@@ -69,7 +69,7 @@ censusHouseSize <- get_decennial(geography = "tract",
                                       HSSevenPlus = "H013008"),
                         output = "wide",
                         state = all_states,
-                        geometry = FALSE)>%>
+                        geometry = FALSE)%>%
   mutate(pct_HSOne = HSOne / HSTotal) %>%
   mutate(pct_HSTwo = HSTwo / HSTotal) %>%
   mutate(pct_HSThree = HSThree / HSTotal) %>%
@@ -111,7 +111,7 @@ censusRace <- get_decennial(geography = "tract",
   mutate(pct_RNH = RNH / RTotal) %>%
   mutate(pct_ROther = ROther / RTotal) %>%
   mutate(pct_RTwoPlus = RTwoPlus / RTotal) %>%
-  select(GOID, pct_RWhite, pct_RBlack, pct_RAI, pct_RAsian, pct_RNH, pct_ROther, pct_RTwoPlus)
+  select(GEOID, pct_RWhite, pct_RBlack, pct_RAI, pct_RAsian, pct_RNH, pct_ROther, pct_RTwoPlus)
 
 acsEducation<- get_acs(geography = "tract", 
                    variables = c(EdTotal = "B15003_001",
@@ -132,7 +132,7 @@ acsEducation<- get_acs(geography = "tract",
   mutate(pct_EdMasters = EdMastersE / EdTotalE)%>%
   mutate(pct_EdProfessional = EdProfessionalE / EdTotalE)%>%
   mutate(pct_EdDoctorate = EdDoctorateE / EdTotalE)%>%
-  select(GEID, pct_EdHighSchool, pct_EdGED, pct_EdAssociates, pct_EdBachelors, pct_EdMasters, pct_EdProfessional, pct_EdDoctorate)
+  select(GEOID, pct_EdHighSchool, pct_EdGED, pct_EdAssociates, pct_EdBachelors, pct_EdMasters, pct_EdProfessional, pct_EdDoctorate)
 
 
 acsMedIncome<- get_acs(geography = "tract", 
@@ -148,17 +148,19 @@ acsMedIncome<- get_acs(geography = "tract",
 * Physical Health
 ```{r, messages=FALSE, warning=FALSE}
 
-Physical_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release (1).csv') %>%
+Physical_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release.csv') %>%
   filter(Year == 2018) %>%
   filter(Short_Question_Text == "Physical Health") %>%
-  rename(GEOID = CountyFIPS) %>%
-  group_by(GEOID)
+  rename(GEOID = LocationID) %>%
+  group_by(GEOID) %>%
+  select(GEOID, Data_Value, Data_Value_Unit)
 
-Mental_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release (1).csv') %>%
+Mental_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release.csv') %>%
   filter(Year == 2018) %>%
   filter(Short_Question_Text == "Mental Health") %>%
-  rename(GEOID = CountyFIPS) %>%
-  group_by(GEOID)
+  rename(GEOID = LocationID) %>%
+  group_by(GEOID) %>%
+  select(GEOID, Data_Value, Data_Value_Unit)
 ```
 
 ## CDC - MRFEI - 2011 - RAVEENA
@@ -172,7 +174,14 @@ CDC_MRFEI <- read_excel(path = "2_16_mrfei_data_table.xls",
 
 ## Combine Data into One Table
 ```{r}
-
+data <- left_join(USDA, Physical_Health) %>%
+  left_join(Mental_Health) %>%
+  left_join(censusMedAge)%>%
+  left_join(censusHouseSize) %>%
+  left_join(censusChildren) %>%
+  left_join(censusRace) %>%
+  left_join(acsEducation) %>%
+  left_join(acsMedIncome)
 ```
 
 # References
