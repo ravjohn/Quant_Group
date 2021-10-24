@@ -33,7 +33,8 @@ USDA <- read_csv("Food Access Research Atlas.csv") %>%
                            TRUE ~ "not a tract")) %>%
   mutate(pct_SNAP = TractSNAP / OHU2010) %>%
   filter(CensusTract != "not a tract") %>%
-  select(CensusTract, TractSNAP, OHU2010, pct_SNAP, PovertyRate, LA1and10)
+  rename(GEOID = CensusTract)%>%
+  select(GEOID, TractSNAP, OHU2010, pct_SNAP, PovertyRate, LA1and10)
 ```
 
 ## Census Data - 2010 - RAVEENA
@@ -131,6 +132,11 @@ CDC_MRFEI <- read_excel(path = "2_16_mrfei_data_table.xls",
 
 # References
 Centers for Disease Control and Prevention, "Census Tract Level State Maps of the Modified Retail Food Environment Index (mRFEI)" https://www.cdc.gov/obesity/downloads/census-tract-level-state-maps-mrfei_TAG508.pdf
+
 Seligman, Hilary K., and Dean Schillinger. "Hunger and Socioeconomic Disparities in Chronic Disease." The New England Journal of Medicine 363, no. 1 (2010): 6-9.
+
 United States Census Bureau. American Community Survey, 5-year estimates. 2019.
+
 United States Census Bureau. 2010.
+
+United States Department of Agriculture. "Food Access Research Atlas". 2019. "https://www.ers.usda.gov/data-products/food-access-research-atlas/download-the-data/"
