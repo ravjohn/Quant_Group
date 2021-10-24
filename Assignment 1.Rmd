@@ -125,13 +125,13 @@ acsEducation<- get_acs(geography = "tract",
                    state = all_states,
                    output = "wide",
                    geometry = FALSE)%>%
-  mutate(pct_EdHighSchool = EdHighSchool / EdTotal)%>%
-  mutate(pct_EdGED = EdGED / EdTotal)%>%
-  mutate(pct_EdAssociates = EdAssociates / EdTotal)%>%
-  mutate(pct_EdBachelors = EdBachelors / EdTotal)%>%
-  mutate(pct_EdMasters = EdMasters / EdTotal)%>%
-  mutate(pct_EdProfessional = EdProfessional / EdTotal)%>%
-  mutate(pct_EdDoctorate = EdDoctorate / EdTotal)%>%
+  mutate(pct_EdHighSchool = EdHighSchoolE / EdTotalE)%>%
+  mutate(pct_EdGED = EdGEDE / EdTotalE)%>%
+  mutate(pct_EdAssociates = EdAssociatesE / EdTotalE)%>%
+  mutate(pct_EdBachelors = EdBachelorsE / EdTotalE)%>%
+  mutate(pct_EdMasters = EdMastersE / EdTotalE)%>%
+  mutate(pct_EdProfessional = EdProfessionalE / EdTotalE)%>%
+  mutate(pct_EdDoctorate = EdDoctorateE / EdTotalE)%>%
   select(GEID, pct_EdHighSchool, pct_EdGED, pct_EdAssociates, pct_EdBachelors, pct_EdMasters, pct_EdProfessional, pct_EdDoctorate)
 
 
