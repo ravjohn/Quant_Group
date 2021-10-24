@@ -9,7 +9,7 @@ output: html_document
 How do food access and demographic characteristics impact mental and physical health on a county scale?
 
 # Prior Research - AlL
-Seligman and Schillinger (2010) posit that food insecurity and chronic disease follows a cyclical pattern where food insecurity leads to chronic disease, thereby increasing medical costs and causing low income households to make trade-offs in spending, often leading to less money available to address food insecurity.
+Seligman and Schillinger (2010) posit that food insecurity and chronic disease follows a cyclical pattern where food insecurity leads to chronic disease, thereby increasing medical costs and causing low income households to make trade-offs in spending, often leading to less money available to address food insecurity. 
 
 # Data
 
