@@ -9,9 +9,23 @@ output: html_document
 How do food access and demographic characteristics impact mental and physical health on a county scale?
 
 # Prior Research - AlL
-Seligman and Schillinger (2010) posit that food insecurity and chronic disease follows a cyclical pattern where food insecurity leads to chronic disease, thereby increasing medical costs and causing low income households to make trade-offs in spending, often leading to less money available to address food insecurity. 
+Seligman and Schillinger (2010) posit that food insecurity and chronic disease follows a cyclical pattern where food insecurity leads to chronic disease, thereby increasing medical costs and causing low income households to make trade-offs in spending, often leading to less money available to address food insecurity. Additionally, the results of Jones (2017) suggests that individual food insecurity is associated with poorer mental health and specific psychosocial stressors across global regions independent of socio-ecoomic status.
 
 # Data
+The sample population for this study is the full set of all census tracts in the United States, for all people over the age of 18. The analysis will include the following variables:
+
+* Access to food options within 1 mile urban or 10 miles rural
+* SNAP recipients by housing units
+* Percent of households using SNAP
+* Poverty rate
+* Age
+* Education
+* Median Income
+* Household size
+* Households with children
+* Race
+* Mental Health Outcomes
+* Physical Health Outcomes
 
 # Load Data
 ```{r, message = FALSE, results = FALSE}
@@ -44,8 +58,7 @@ USDA <- read_csv("Food Access Research Atlas.csv") %>%
 * Household size
 * Households with children
 * Race
-
-```{r}
+```{r, message = FALSE, results = FALSE, warning = FALSE}
 
 all_states <- c(state.abb)
 
@@ -144,9 +157,9 @@ acsMedIncome<- get_acs(geography = "tract",
 ```
 
 ## CDC - PLACES - 2018 - ALANNA
-* Mental Health
-* Physical Health
-```{r, messages=FALSE, warning=FALSE}
+* Mental Health Outcomes (Mental health not good for >=14 days among adults aged >=18 years)
+* Physical Health Outcomes (Physical health not good for >=14 days among adults aged >=18 years)
+```{r, message = FALSE, results = FALSE, warning = FALSE}
 
 Physical_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release.csv') %>%
   filter(Year == 2018) %>%
@@ -163,9 +176,10 @@ Mental_Health <- read_csv('PLACES__Local_Data_for_Better_Health__Census_Tract_Da
   select(GEOID, Data_Value, Data_Value_Unit)
 ```
 
-## CDC - MRFEI - 2011 - RAVEENA
+## CDC - MRFEI - 2011
+This dataset uses 2000 Census Tracts instead of 2010, so importing and formatting has been complex. It is not included in our data table, but we hope to use it in future assignments.
 * Healthy Food Sources
-```{r}
+```{r, message = FALSE, results = FALSE, warning = FALSE}
 CDC_MRFEI <- read_excel(path = "2_16_mrfei_data_table.xls", 
                       sheet = "MRFEI According to Census Tract") %>%
   rename(GEOID = fips)%>%
@@ -173,7 +187,7 @@ CDC_MRFEI <- read_excel(path = "2_16_mrfei_data_table.xls",
 ```
 
 ## Combine Data into One Table
-```{r}
+```{r, message = FALSE, results = FALSE, warning = FALSE}
 data <- left_join(USDA, Physical_Health) %>%
   left_join(Mental_Health) %>%
   left_join(censusMedAge)%>%
@@ -182,10 +196,22 @@ data <- left_join(USDA, Physical_Health) %>%
   left_join(censusRace) %>%
   left_join(acsEducation) %>%
   left_join(acsMedIncome)
+
+kable(head(data))
 ```
+This dataset includes 72,351 census tracts across the United States.
 
 # References
+Ahern, Melissa, Brown, Cheryl, Dukas, Stephen. "A National Study of the Association Between Food Environments and County-Level Health Outcomes." The Journal of Rural Health 27, no. 4 (2011): 367-379. doi: https://doi.org/10.1111/j.1748-0361.2011.00378.x
+
 Centers for Disease Control and Prevention, "Census Tract Level State Maps of the Modified Retail Food Environment Index (mRFEI)" https://www.cdc.gov/obesity/downloads/census-tract-level-state-maps-mrfei_TAG508.pdf
+
+Centers for Disease Control and Prevention, "PLACES: Local Data for Better Health, Census Tract Data 2020 release".
+https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh
+
+Jones, Andrew D."Food Insecurity and Mental Health Status: A Global Analysis of 149 Countries." American Journal of Preventative Medicine 53, no. 2 (2017): 264-273. doi: https://doi.org/10.1016/j.amepre.2017.04.008
+
+Kaiser ML, Dionne J, Carr JK. "Predictors of Diet-Related Health Outcomes in Food-Secure and Food-Insecure Communities." Soc Work Public Health 34, no.3 (2019):214-229. doi: 10.1080/19371918.2019.1575313. Epub 2019 Feb 15. PMID: 30767652.
 
 Seligman, Hilary K., and Dean Schillinger. "Hunger and Socioeconomic Disparities in Chronic Disease." The New England Journal of Medicine 363, no. 1 (2010): 6-9.
 
